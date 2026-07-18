@@ -18,9 +18,13 @@ public class KafkaProducerSerializationConfig {
 	@Bean
 	public ProducerFactory<Object, Object> kafkaProducerFactory(Environment env) {
 		Map<String, Object> props = new HashMap<>();
+		String bootstrapServers =
+				env.getProperty("spring.kafka.bootstrap-servers");
+
+		System.out.println("Kafka Bootstrap Servers = " + bootstrapServers);
 		props.put(
 				ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-				env.getProperty("spring.kafka.bootstrap-servers", "localhost:9092"));
+				bootstrapServers);
 
 		String clientId = env.getProperty("spring.kafka.producer.client-id");
 		if (clientId != null && !clientId.isBlank()) {
